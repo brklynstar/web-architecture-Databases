@@ -20,35 +20,35 @@
         <div id="items">
             {% for pant in plants %}
             <div class="card">
-                <a href=plant/{{plant.plant__id}}><img src="{{plant.photo.url}}"></a>
+                <a href=plant/{{plant.plant__id}}><img src="{{plant.photo}}"></a>
                 <div class="card-content">
-                    <a href=/plant/1{{plant.plant__id}}>{{plant.name}}</a>
+                    <a href="/plant/{{plant.plant_id}}">{{plant.name}}></a>
                 </div>
             </div>
-
-            <div class="card">
+            {% endfor %}
+            <!-- <div class="card">
                 <a href="/plant/2"><img src="{{plant.photo.url}}"></a>
                 <div class="card-content">
                     <a href=/plant/2{{plant.plant__id}}>{{plant.name}}</a>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="card">
+            <!-- <div class="card">
                 <a href="/plant/3"><img src="{{plant.photo.url}}"></a>
                 <div class="card-content">
                     <a href=/plant/3>{{plant.name}}</a>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="card">
+            <!-- <div class="card">
                 <a href="/plant/4"><img src="{{plant.photo.url}}"></a>
                 <div class="card-content">
                     <a href="/plant/4">{{plant.name}}</a>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
 </main>
-{% endfor %}
+
 {% endblock content %}

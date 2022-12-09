@@ -21,7 +21,7 @@
         <section id="info">
             <h3>Info</h3>
 
-            <strong>Date Planted}}</strong>
+            <strong>Date Planted</strong>
             {{plant.date_planted}}
             <br><br>
 
@@ -59,7 +59,7 @@
             {% for harvest in harvests %}
             <ul>
                 <li>{{harvest.date}}: {{harvest.quantity}} {{plant.name}}</li>
-                {%endfor}
+            {%endfor%}
             </ul>
         </section>
 

@@ -92,7 +92,7 @@ def harvest(plant_id):
     # TODO: Create a new harvest object by passing in the form data from the
     # detail page form.
     new_harvest = {
-        'quantity': request.form['harvest_amt'], # e.g. '3 tomatoes'
+        'quantity': request.form['harvest_amount'], # e.g. '3 tomatoes'
         'date': request.form['date_planted'],
         'plant_id': plant_id
     }
@@ -114,7 +114,8 @@ def edit(plant_id):
             'variety' : request.form['variety'],
             'photo' : request.form['photo'],
             'date_planted' : request.form['date_planted']
-        }}
+        }
+    }
         mongo.db.plants.update_one(search_param, change_param)
         return redirect(url_for('detail', plant_id=plant_id))
     else:

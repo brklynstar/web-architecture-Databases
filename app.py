@@ -22,7 +22,7 @@ def plants_list():
     # TODO: Replace the following line with a database call to retrieve *all*
     # plants from the Mongo database's `plants` collection.
 
-    plants_data = mongo.db.plants_data.find()
+    plants_data = mongo.db.plants.find()
 
     context = {
         'plants': plants_data,
@@ -40,24 +40,23 @@ def create():
     if request.method == 'POST':
         # TODO: Get the new plant's name, variety, photo, & date planted, and 
         # store them in the object below.
-        name = request.form['plant_name']
-        variety = request.form['variety']
-        photo = request.form['photo']
-        date = request.form['date_planted']
-        
         new_plant = {
-            'name': name,
-            'variety': variety,
-            'photo_url': photo,
-            'date_planted': date
+            'name': request.form['plant_name'],
+            'variety': request.form['variety'],
+            'photo_url': request.form['photo_url'],
+            'date_planted': request.form['date_planted'],
         }
+
+        added_plant = mongo.db.plants.insert_one(new_plant)
+        user_id = added_plant.inserted_id
+        
         # TODO: Make an `insert_one` database call to insert the object into the
         # database's `plants` collection, and get its inserted id. Pass the 
         # inserted id into the redirect call below.
 
         
 
-        return redirect(url_for('detail', plant_id=new_plant['id']))
+        return redirect(url_for('detail', plant_id=user_id))
 
     else:
         return render_template('create.html')
@@ -70,15 +69,13 @@ def detail(plant_id):
     # TODO: Replace the following line with a database call to retrieve *one*
     # plant from the database, whose id matches the id passed in via the URL.
     plant_to_show = mongo.db.plants_data.find_one({'_id' :ObjectId(plant_to_show)})
-    search = mongo.db.harvests_data.find({'id': ObjectId(plant_to_show)})
+    search = mongo.db.harvests_data.find({'id': ObjectId(plant_id)})
 
     # TODO: Use the `find` database operation to find all harvests for the
     # plant's id.
     # HINT: This query should be on the `harvests` collection, not the `plants`
     # collection.
-    harvests = []
-    for data in search:
-        harvests.append(data)
+    harvests = mongo.db.harvests.find({"plant_id" : plant_id})
 
     context = {
         'plant' : plant_to_show,
@@ -103,7 +100,7 @@ def harvest(plant_id):
     # TODO: Make an `insert_one` database call to insert the object into the 
     # `harvests` collection of the database.
     mongo.db.harvests_data.insert_one(new_harvest)
-    return redirect(url_for('detail', plant_id=plant_id))
+    return redirect(url_for('detail', plant_id=["id"]))
 
 @app.route('/edit/<plant_id>', methods=['GET', 'POST'])
 def edit(plant_id):

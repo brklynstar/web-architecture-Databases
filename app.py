@@ -68,7 +68,7 @@ def detail(plant_id):
 
     # TODO: Replace the following line with a database call to retrieve *one*
     # plant from the database, whose id matches the id passed in via the URL.
-    plant_to_show = mongo.db.plants.find_one({'_id' :ObjectId(plant_id)})
+    plant_to_show = mongo.db.plants.find_one({"_id" : ObjectId(plant_id)})
     # search = mongo.db.harvests_data.find({'id': ObjectId(plant_id)})
 
     # TODO: Use the `find` database operation to find all harvests for the
@@ -92,7 +92,7 @@ def harvest(plant_id):
     # TODO: Create a new harvest object by passing in the form data from the
     # detail page form.
     new_harvest = {
-        'quantity': request.form['harvest_amount'], # e.g. '3 tomatoes'
+        'quantity': request.form['harvest_amount'], 
         'date': request.form['date_planted'],
         'plant_id': plant_id
     }
@@ -108,14 +108,14 @@ def edit(plant_id):
     if request.method == 'POST':
         # TODO: Make an `update_one` database call to update the plant with the
         # given id. Make sure to put the updated fields in the `$set` object.
-        search_param = {"_id" : ObjectId(plant_id)}
+        search_param = {"_id" : ObjectId(plant_id) }
         change_param = {"$set" : {
             'name' : request.form['plant_name]'],
             'variety' : request.form['variety'],
             'photo' : request.form['photo'],
             'date_planted' : request.form['date_planted']
-        }
-    }
+        } }
+    
         mongo.db.plants.update_one(search_param, change_param)
         return redirect(url_for('detail', plant_id=plant_id))
     else:
